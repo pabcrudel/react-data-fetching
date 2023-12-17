@@ -11,18 +11,17 @@ export default function App () {
   useEffect(() => {
     fetch(CAT_ENDPOINT_RANDOM_FACT)
       .then(res => res.json())
-      .then(res => {
-        const { fact } = res;
-        setFact(fact);
-
-        const threeFirstWords = fact.split(' ', 3).join(' ');
-
-        fetch(catEndpointRandomPhoto(threeFirstWords))
-          .then(res => {
-            setCatImageUrl(res.url);
-          });
-      });
+      .then(res => setFact(res.fact));
   }, []);
+
+  useEffect(() => {
+    if (fact) {
+      const threeFirstWords = fact.split(' ', 3).join(' ');
+
+      fetch(catEndpointRandomPhoto(threeFirstWords))
+        .then(res => setCatImageUrl(res.url));
+    }
+  }, [fact]);
 
   return (
     <>
@@ -33,7 +32,7 @@ export default function App () {
       <main>
         {fact && <p>{fact}</p>}
         {
-        catImageUrl &&
+          catImageUrl &&
           <img
             src={catImageUrl}
             alt={'Image extracted using the first three words of ' + fact}
