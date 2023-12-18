@@ -8,11 +8,7 @@ export default function App () {
   const [fact, setFact] = useState();
   const [catImageUrl, setCatImageUrl] = useState();
 
-  useEffect(() => {
-    fetch(CAT_ENDPOINT_RANDOM_FACT)
-      .then(res => res.json())
-      .then(res => setFact(res.fact));
-  }, []);
+  useEffect(getCatFact, []);
 
   useEffect(() => {
     if (fact) {
@@ -23,6 +19,12 @@ export default function App () {
     }
   }, [fact]);
 
+  function getCatFact () {
+    fetch(CAT_ENDPOINT_RANDOM_FACT)
+      .then(res => res.json())
+      .then(res => setFact(res.fact));
+  }
+
   return (
     <>
       <header>
@@ -30,12 +32,20 @@ export default function App () {
       </header>
 
       <main>
-        {fact && <p>{fact}</p>}
+        {
+          fact && (
+            <>
+              <button onClick={getCatFact}>Get new fact</button>
+              <p>{fact}</p>
+            </>
+          )
+        }
         {
           catImageUrl &&
           <img
             src={catImageUrl}
             alt={'Image extracted using the first three words of ' + fact}
+            crossOrigin='anonymous'
           />
         }
       </main>
