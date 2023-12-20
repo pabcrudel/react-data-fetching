@@ -1,29 +1,9 @@
-import { useEffect, useState } from 'react';
-
-const CAT_ENDPOINT_RANDOM_FACT = 'https://catfact.ninja/fact';
-const catEndpointRandomPhoto = word => 'https://cataas.com/cat/says/' + word +
-  '?fontSize=50&fontColor=red';
+import { useCatFact } from './hooks/use-cat-fact';
+import { useCatImage } from './hooks/use-cat-image';
 
 export default function App () {
-  const [fact, setFact] = useState();
-  const [catImageUrl, setCatImageUrl] = useState();
-
-  useEffect(getCatFact, []);
-
-  useEffect(() => {
-    if (fact) {
-      const threeFirstWords = fact.split(' ', 3).join(' ');
-
-      fetch(catEndpointRandomPhoto(threeFirstWords))
-        .then(res => setCatImageUrl(res.url));
-    }
-  }, [fact]);
-
-  function getCatFact () {
-    fetch(CAT_ENDPOINT_RANDOM_FACT)
-      .then(res => res.json())
-      .then(res => setFact(res.fact));
-  }
+  const { fact, refreshCatFact } = useCatFact();
+  const catImageUrl = useCatImage({ fact });
 
   return (
     <>
@@ -35,7 +15,7 @@ export default function App () {
         {
           fact && (
             <>
-              <button onClick={getCatFact}>Get new fact</button>
+              <button onClick={refreshCatFact}>Get new fact</button>
               <p>{fact}</p>
             </>
           )
