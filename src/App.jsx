@@ -9,7 +9,7 @@ export default function App () {
   return (
     <>
       <header>
-        <h1>Hello world</h1>
+        <h1>Cat Facts</h1>
       </header>
 
       <main>
