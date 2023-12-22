@@ -20,6 +20,32 @@
   box-sizing: inherit;
 }
 
+body {
+  /* Increase padding of each side */
+  padding: 0 15px;
+}
+
+#app {
+  /* React App height will be at least the viewer height */
+  min-height: 100vh;
+
+  /* Elements inside the React App fill appear in columns */
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  /* Even if it is the smallest, it will have most space than it's siblings */
+  flex-grow: 1;
+}
+
+footer #copyright {
+  text-align: center;
+
+  /* Increase margin top depending on the font size of the copyright section */
+  margin-top: 2em;
+}
+
 img {
   max-width: 350px;
   display: block;

@@ -1,5 +1,6 @@
 import { useCatFact } from './hooks/use-cat-fact';
 import { useCatImage } from './hooks/use-cat-image';
+import Footer from './components/Footer';
 
 export default function App () {
   const { fact, refreshCatFact } = useCatFact();
@@ -29,6 +30,8 @@ export default function App () {
           />
         }
       </main>
+
+      <Footer repositoryName='react-data-fetching'/>
     </>
   );
 }
